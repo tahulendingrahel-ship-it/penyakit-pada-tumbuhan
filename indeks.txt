@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<title>SPK Diagnosis Penyakit Tanaman</title>
+<style>
+body { font-family: Arial; margin: 20px; max-width: 900px; }
+select { width: 100%; padding: 10px; margin: 10px 0; }
+.box { padding: 20px; border: 1px solid #ccc; border-radius: 8px; }
+#hasil { background: #f3f3f3; padding: 15px; border-radius: 8px; margin-top: 15px; }
+</style>
+</head>
+<body>
+
+<h2>Sistem Pakar Diagnosis Penyakit Tanaman</h2>
+<p>Pilih gejala secara bertahap. Gejala berikutnya otomatis menyesuaikan.</p>
+
+<div class="box">
+  <label>Gejala 1</label>
+  <select id="g1" onchange="update(1)">
+    <option value="">-- pilih gejala --</option>
+  </select>
+
+  <label>Gejala 2</label>
+  <select id="g2" onchange="update(2)">
+    <option value="">-- pilih gejala --</option>
+  </select>
+
+  <label>Gejala 3</label>
+  <select id="g3" onchange="update(3)">
+    <option value="">-- pilih gejala --</option>
+  </select>
+
+  <label>Gejala 4</label>
+  <select id="g4" onchange="update(4)">
+    <option value="">-- pilih gejala --</option>
+  </select>
+
+  <label>Gejala 5</label>
+  <select id="g5" onchange="update(5)">
+    <option value="">-- pilih gejala --</option>
+  </select>
+
+  <div id="hasil"></div>
+</div>
+
+<script>
+// === DATA DARI FILE EXCEL ANDA ===
+const data = [
+  { no:1, tumbuhan:"Anggur", penyakit:"Embun Tepung",
+    gejala:["Daun Bertepung Putih","Pertumbuhan Terhambat","Buah Menghitam","Daun Menguning","Daun Gugur"] },
+  { no:2, tumbuhan:"Gandum", penyakit:"Karat Daun",
+    gejala:["Benjolan Jingga pada Daun","Daun Mengering","Pertumbuhan Terganggu","Bintik Kecil Jingga","Daun Pucat"] },
+  { no:3, tumbuhan:"Padi", penyakit:"Hawar Daun",
+    gejala:["Bercak Keputihan pada Daun","Daun Mengering dari Ujung","Anakan Berkurang","Daun Coklat","Malai Gagal Terbentuk"] },
+  { no:4, tumbuhan:"Tomat", penyakit:"Layu Fusarium",
+    gejala:["Tanaman Layu meski Tanah Basah","Ujung Daun Menguning","Daun Menggulung","Batang Coklat bagian dalam","Buah Kecil dan Sedikit"] },
+  { no:5, tumbuhan:"Melon", penyakit:"Busuk Batang",
+    gejala:["Pangkal Batang Membusuk","Tanaman Mudah Roboh","Daun Menguning","Batang Berair","Aroma Busuk"] },
+  { no:6, tumbuhan:"Timun", penyakit:"Virus Daun Keriting",
+    gejala:["Daun Keriting","Pertumbuhan Terhambat","Warna Daun Pucat","Daun Mengecil","Buah Sedikit"] },
+  { no:7, tumbuhan:"Pepaya", penyakit:"Bercak Daun Alternaria",
+    gejala:["Cincin Konsentris pada Daun","Daun Berlubang","Daun Menguning","Daun Rontok","Bercak Coklat Bulat"] },
+  { no:8, tumbuhan:"Cabai", penyakit:"Layu Bakteri",
+    gejala:["Tanaman Layu Mendadak","Getah Kental Keluar","Daun Menguning","Akar Busuk","Batang Coklat"] },
+  { no:9, tumbuhan:"Terung", penyakit:"Busuk Pangkal Batang",
+    gejala:["Pangkal Batang Menghitam","Daun Menguning","Pertumbuhan Terhambat","Batang Retak","Tanaman Mati"] }
+];
+
+// === INIT GEJALA 1 ===
+window.onload = function() {
+  const g1 = document.getElementById("g1");
+  let list = new Set();
+  data.forEach(p => list.add(p.gejala[0]));
+  list.forEach(g => g1.innerHTML += `<option>${g}</option>`);
+};
+
+// === UPDATE CASCADING ===
+function update(level) {
+  let vals = [
+    document.getElementById("g1").value,
+    document.getElementById("g2").value,
+    document.getElementById("g3").value,
+    document.getElementById("g4").value,
+    document.getElementById("g5").value
+  ];
+
+  let filtered = data.filter(p =>
+    vals.every((v,i)=> !v || p.gejala[i]===v)
+  );
+
+  // isi dropdown berikutnya
+  if(level < 5){
+    let nextSel = document.getElementById("g" + (level+1));
+    nextSel.innerHTML = `<option value="">-- pilih gejala --</option>`;
+    let set = new Set();
+    filtered.forEach(p => set.add(p.gejala[level]));
+    set.forEach(g => nextSel.innerHTML += `<option>${g}</option>`);
+  }
+
+  // tampilkan hasil
+  const hasil = document.getElementById("hasil");
+  if(filtered.length === 1){
+    hasil.innerHTML = `
+      <b>Penyakit:</b> ${filtered[0].penyakit}<br>
+      <b>Tumbuhan:</b> ${filtered[0].tumbuhan}<br>
+      <b>Gejala lengkap:</b>
+      <ul>${filtered[0].gejala.map(g=>`<li>${g}</li>`).join("")}</ul>
+    `;
+  } else if(filtered.length > 1){
+    hasil.innerHTML = `<b>${filtered.length} kemungkinan penyakit.</b><br>Pilih gejala berikutnya.`;
+  } else {
+    hasil.innerHTML = `<b>Tidak ada penyakit yang cocok.</b>`;
+  }
+}
+</script>
+
+</body>
+</html>
