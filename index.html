@@ -11,6 +11,7 @@
         background: url('https://images.unsplash.com/photo-1501004318641-b39e6451bec6') no-repeat center center fixed;
         background-size: cover;
         color: #fff;
+        overflow-x: hidden;
     }
 
     .overlay {
@@ -27,18 +28,18 @@
         z-index: 10;
         text-align: center;
         padding-top: 120px;
+        animation: fadeIn 1.2s ease-in-out;
     }
 
-    h1 {
-        font-size: 45px;
-        font-weight: bold;
-        text-shadow: 2px 2px 8px #000;
+    @keyframes fadeIn {
+        from { opacity:0; transform: translateY(20px); }
+        to { opacity:1; transform: translateY(0); }
     }
 
-    h3 {
-        text-shadow: 2px 2px 6px #000;
-    }
+    h1 { font-size: 45px; text-shadow: 2px 2px 8px #000; }
+    h3 { text-shadow: 2px 2px 6px #000; }
 
+    /* ANIMASI TOMBOL */
     button {
         padding: 15px 25px;
         font-size: 18px;
@@ -48,10 +49,12 @@
         background: #4CAF50;
         color: white;
         border-radius: 8px;
-        transition: 0.3s;
+        transition: transform 0.25s ease, box-shadow 0.25s ease;
     }
+
     button:hover {
-        background: #3e8e41;
+        transform: scale(1.08);
+        box-shadow: 0px 0px 15px #4CAF50;
     }
 
     /* SPK CARD */
@@ -61,8 +64,9 @@
         color: black;
         padding: 20px;
         margin: 50px auto;
-        width: 500px;
+        width: 520px;
         border-radius: 12px;
+        animation: fadeIn 0.9s ease-in-out;
     }
 
     select, .btnDiagnosa {
@@ -78,10 +82,12 @@
         border: none;
         border-radius: 8px;
         cursor: pointer;
+        transition: transform 0.25s ease, box-shadow 0.25s ease;
     }
 
     .btnDiagnosa:hover {
-        background: #3e8e41;
+        transform: scale(1.05);
+        box-shadow: 0px 0px 10px #4CAF50;
     }
 
     .result-box {
@@ -92,6 +98,23 @@
         border-left: 5px solid #4CAF50;
     }
 
+    /* ANIMASI GAMBAR */
+    .img-penyakit {
+        width: 100%;
+        border-radius: 10px;
+        margin: 10px 0;
+        opacity: 0;
+        transform: scale(0.9);
+        animation: zoomFade 0.7s forwards ease-out;
+    }
+
+    @keyframes zoomFade {
+        to {
+            opacity: 1;
+            transform: scale(1);
+        }
+    }
+
 </style>
 
 </head>
@@ -99,9 +122,7 @@
 
 <div class="overlay"></div>
 
-<!-- ============================= -->
-<!--            MENU UTAMA         -->
-<!-- ============================= -->
+<!-- MENU UTAMA -->
 <div class="container" id="menuUtama">
     <h1>SISTEM PENDUKUNG KEPUTUSAN<br>PENYAKIT TANAMAN</h1>
     <h3>KELOMPOK 4 – TEKNOLOGI INFORMASI</h3>
@@ -109,15 +130,12 @@
     <button onclick="bukaSPK()">Mulai Diagnosa Penyakit</button>
 </div>
 
-<!-- ============================= -->
-<!--        HALAMAN SPK           -->
-<!-- ============================= -->
+<!-- HALAMAN SPK -->
 <div id="spkPage">
 
     <h2 style="text-align:center;">Diagnosa Penyakit Tumbuhan</h2>
     <p style="text-align:center;">Pilih gejala untuk mengetahui penyakitnya</p>
 
-    <!-- Pilihan Gejala -->
     <label>Gejala 1:</label>
     <select id="gejala1" onchange="updateGejala2()">
         <option value="">-- pilih gejala --</option>
@@ -135,26 +153,41 @@
 </div>
 
 <script>
-// =============================================
-//        DATA DARI EXCEL (SUDAH DIBERSIHKAN)
-// =============================================
+// DATA + GAMBAR
 const data = [
-    { no:1, tanaman:"Anggur", penyakit:"Embun Tepung", gejala:"Daun Menguning dan Menggulung" },
-    { no:2, tanaman:"Gandum", penyakit:"Karat Daun", gejala:"Bercak Timbul pada Permukaan Daun" },
-    { no:3, tanaman:"Padi", penyakit:"Hawar Daun", gejala:"Ujung Daun Mengering" },
-    { no:4, tanaman:"Tomat", penyakit:"Layu Fusarium", gejala:"Tanaman Layu meski Tanah Basah" },
-    { no:5, tanaman:"Melon", penyakit:"Busuk Batang", gejala:"Batang Bagian dalam Cokelat" },
-    { no:6, tanaman:"Timun", penyakit:"Virus Daun Keriting", gejala:"Daun Keriting dan Mengecil" },
-    { no:7, tanaman:"Pepaya", penyakit:"Bercak Daun Cincin", gejala:"Ada Cincin Konsentris" },
-    { no:8, tanaman:"Kentang", penyakit:"Layu Bakteri", gejala:"Tanaman Layu Mendadak" },
-    { no:9, tanaman:"Cabai", penyakit:"Gummosis", gejala:"Getah Kental Keluar dari Batang" },
-    { no:10, tanaman:"Kelapa Sawit", penyakit:"Busuk Pangkal Batang", gejala:"Pangkal Batang Membusuk dan Hitam" }
+    { no:1, tanaman:"Anggur", penyakit:"Embun Tepung", gejala:"Daun Menguning dan Menggulung", 
+      img:"https://i.postimg.cc/fR7q7z9z/powdery-mildew.jpg" },
+
+    { no:2, tanaman:"Gandum", penyakit:"Karat Daun", gejala:"Bercak Timbul pada Permukaan Daun",
+      img:"https://i.postimg.cc/R0SxT3c7/leaf-rust.jpg" },
+
+    { no:3, tanaman:"Padi", penyakit:"Hawar Daun", gejala:"Ujung Daun Mengering",
+      img:"https://i.postimg.cc/rF1C5z9f/blight.jpg" },
+
+    { no:4, tanaman:"Tomat", penyakit:"Layu Fusarium", gejala:"Tanaman Layu meski Tanah Basah",
+      img:"https://i.postimg.cc/YqLD4DP9/fusarium.jpg" },
+
+    { no:5, tanaman:"Melon", penyakit:"Busuk Batang", gejala:"Batang Bagian dalam Cokelat",
+      img:"https://i.postimg.cc/43jF9FB9/stem-rot.jpg" },
+
+    { no:6, tanaman:"Timun", penyakit:"Virus Daun Keriting", gejala:"Daun Keriting dan Mengecil",
+      img:"https://i.postimg.cc/9Mb8f7b1/curl-virus.jpg" },
+
+    { no:7, tanaman:"Pepaya", penyakit:"Bercak Daun Cincin", gejala:"Ada Cincin Konsentris",
+      img:"https://i.postimg.cc/yxDvH2kY/ring-spot.jpg" },
+
+    { no:8, tanaman:"Kentang", penyakit:"Layu Bakteri", gejala:"Tanaman Layu Mendadak",
+      img:"https://i.postimg.cc/MTQZxz4R/bacterial-wilt.jpg" },
+
+    { no:9, tanaman:"Cabai", penyakit:"Gummosis", gejala:"Getah Kental Keluar dari Batang",
+      img:"https://i.postimg.cc/MGbxS0pQ/gummosis.jpg" },
+
+    { no:10, tanaman:"Kelapa Sawit", penyakit:"Busuk Pangkal Batang", gejala:"Pangkal Batang Membusuk dan Hitam",
+      img:"https://i.postimg.cc/JzpsRgW0/basal-rot.jpg" }
 ];
 
-// Ambil daftar gejala unik
 const daftarGejala = [...new Set(data.map(d => d.gejala))];
 
-// Isi dropdown gejala1 dan gejala2
 function isiDropdown() {
     const g1 = document.getElementById('gejala1');
     const g2 = document.getElementById('gejala2');
@@ -165,7 +198,6 @@ function isiDropdown() {
     });
 }
 
-// Update gejala2 agar tidak redundan
 function updateGejala2() {
     const dipilih = document.getElementById('gejala1').value;
     const g2 = document.getElementById('gejala2');
@@ -176,7 +208,6 @@ function updateGejala2() {
         .forEach(g => g2.innerHTML += `<option value="${g}">${g}</option>`);
 }
 
-// Fungsi diagnosa
 function diagnosa() {
     const g1 = document.getElementById('gejala1').value;
     const g2 = document.getElementById('gejala2').value;
@@ -205,6 +236,7 @@ function diagnosa() {
             🌿 <b>${k.tanaman}</b><br>
             Penyakit: <b>${k.penyakit}</b><br>
             Gejala: ${k.gejala}<br><br>
+            <img src="${k.img}" class="img-penyakit"><br>
         `;
     });
 
@@ -212,7 +244,6 @@ function diagnosa() {
     hasilDiv.innerHTML = output;
 }
 
-// Fungsi buka halaman SPK
 function bukaSPK() {
     document.getElementById('menuUtama').style.display = 'none';
     document.getElementById('spkPage').style.display = 'block';
@@ -223,5 +254,6 @@ isiDropdown();
 
 </body>
 </html>
+
 
 
