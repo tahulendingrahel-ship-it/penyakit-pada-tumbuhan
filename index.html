@@ -1,92 +1,3 @@
-<!DOCTYPE html>
-<html lang="id">
-<head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>SPK Diagnosa Tanaman</title>
-<style>
-    body { font-family: 'Poppins', sans-serif; background: linear-gradient(135deg, #e6f9e6, #f3fff3); margin: 0; padding: 0; color: #0a3d62; }
-    .page { display:none; padding:20px; }
-    .active { display:block; }
-    .nav { width:100%; background:white; padding:12px 16px; display:flex; justify-content:center; gap:12px; position:sticky; top:0; z-index:5; border-bottom:3px solid #2e7d32; backdrop-filter: blur(6px); flex-wrap:wrap; }
-    .nav button { padding:10px 20px; border:none; border-radius:30px; background:#2e7d32; color:white; font-weight:600; font-size:15px; cursor:pointer; transition:0.25s; box-shadow:0 4px 14px rgba(0,0,0,0.13); }
-    .nav button:hover { background:#1b5e20; transform:translateY(-3px); }
-    .container { max-width:900px; margin:28px auto; background:white; padding:24px; border-radius:18px; box-shadow:0 10px 25px rgba(0,0,0,0.15); animation:fadeSlide 0.7s ease-out; }
-    @keyframes fadeSlide { from{opacity:0; transform:translateY(25px);} to{opacity:1; transform:translateY(0);} }
-    select, button.spkBtn { width:100%; padding:14px; margin-top:14px; border-radius:12px; border:1px solid #66bb6a; font-size:16px; transition:0.18s; }
-    button.spkBtn { background:#2e7d32; color:white; font-weight:600; cursor:pointer; box-shadow:0 5px 12px rgba(0,0,0,0.15); border:none; }
-    button.spkBtn:hover { transform:scale(1.03); background:#1b5e20; }
-    .hasil { background:#e8f5e9; padding:18px; margin-top:18px; border-left:6px solid #2e7d32; border-radius:10px; font-size:15px; }
-    table { width:100%; border-collapse:collapse; margin-top:18px; }
-    th, td { border:1px solid #c8e6c9; padding:12px; text-align:left; font-size:15px; }
-    th { background:#2e7d32; color:white; }
-    tr:nth-child(even) { background:#f1f8f1; }
-    #welcomeScreen { position:fixed; top:0; left:0; width:100%; height:100vh; background:linear-gradient(135deg,#388e3c,#2e7d32,#66bb6a); display:flex; flex-direction:column; justify-content:center; align-items:center; text-align:center; color:white; padding:20px; animation:fadeIn 0.8s ease-out; }
-    @keyframes fadeIn { from{opacity:0;} to{opacity:1;} }
-    @keyframes fadeOut { from{opacity:1;} to{opacity:0;} }
-    .startBtn { padding:14px 30px; font-size:18px; border:none; border-radius:14px; background:white; color:#2e7d32; font-weight:700; cursor:pointer; box-shadow:0 5px 15px rgba(0,0,0,0.2); transition:0.25s; }
-    .startBtn:hover { transform:scale(1.07); }
-    @media (max-width:700px) { .container { margin:18px; padding:18px; } .nav { gap:6px; } }
-</style>
-</head>
-<body>
-
-<!-- Welcome Screen -->
-<div id="welcomeScreen">
-    <h1 style="font-size:48px; font-weight:800; margin:0 0 16px;">🌱 SPK Tanaman</h1>
-    <p style="font-size:18px; opacity:0.95; margin:0 0 24px; max-width:520px;">Sistem Pendukung Keputusan Diagnosa Penyakit Tanaman</p>
-    <button id="btnMulai" class="startBtn">Mulai</button>
-</div>
-
-<!-- Halaman Anggota -->
-<div class="page" id="pageAnggota">
-    <div class="container">
-        <h2 style="text-align:center; color:#1b5e20;">Informasi Kelompok 4</h2>
-        <p style="font-size:16px; font-weight:600;">Daftar Anggota:</p>
-        <ul style="font-size:15px; line-height:1.8;">
-            <li>Tiara Farliani Mamonto – 250311080023</li>
-            <li>Juandri G. Sepang – 250311080018</li>
-            <li>Lotta Virni Br Tumanggor – 250311080019</li>
-            <li>Rahel Tahulending – 250311080020</li>
-            <li>Salli Mustika Sihaloho – 250311080021</li>
-        </ul>
-        <div style="text-align:center; margin-top:20px;">
-            <button id="btnTampilkanMenu" class="spkBtn" style="max-width:240px;">Tampilkan Menu</button>
-        </div>
-    </div>
-</div>
-
-<!-- Halaman Diagnosa -->
-<div class="page" id="page1">
-    <div class="nav">
-        <button data-target="pageAnggota">Anggota</button>
-        <button data-target="page1">Diagnosa</button>
-        <button data-target="page2">Data Keseluruhan</button>
-        <button data-target="page3">Kesimpulan</button>
-    </div>
-    <div class="container">
-        <h2 style="text-align:center; color:#1b5e20;">Menu SPK Penyakit Tanaman</h2>
-        <label for="tanaman">Pilih Nama Tanaman:</label>
-        <select id="tanaman"><option value="">-- Pilih Tanaman --</option></select>
-        <button class="spkBtn" id="btnDiagnosa">Diagnosa</button>
-        <div id="output" class="hasil" style="display:none;"></div>
-    </div>
-</div>
-
-<!-- Halaman Data Keseluruhan -->
-<div class="page" id="page2">
-    <div class="nav">
-        <button data-target="pageAnggota">Anggota</button>
-        <button data-target="page1">Diagnosa</button>
-        <button data-target="page2">Data Keseluruhan</button>
-        <button data-target="page3">Kesimpulan</button>
-    </div>
-    <div class="container">
-        <h2 style="text-align:center; color:#1b5e20;">Data Lengkap 10 Tanaman</h2>
-        <div id="tableWrap"></div>
-    </div>
-</div>
-
 <!-- Halaman Kesimpulan -->
 <div class="page" id="page3">
     <div class="nav">
@@ -98,83 +9,65 @@
     <div class="container">
         <h2 style="text-align:center; color:#1b5e20;">Kesimpulan</h2>
         <p style="font-size:16px; line-height:1.8;">
-            Berdasarkan data 10 tanaman yang dianalisis, berikut ringkasan penyakit dan gejala yang ditemukan:
+            Berdasarkan analisis 10 tanaman, berikut ringkasan mengenai jenis tanaman, sejarah singkat, penyakit yang menyerang, asal-usul patogen, dan gejala utama:
         </p>
         <div id="kesimpulanWrap"></div>
     </div>
 </div>
 
 <script>
-const data = {
-    cabai:{nama:"Cabai",ilmiah:"Capsicum annuum",penyakit:"Antraknosa",patogen:"Colletotrichum capsici / C. gloeosporioides",gejala:"Buah muncul bercak hitam cekung, membusuk, dan rontok."},
-    tomat:{nama:"Tomat",ilmiah:"Solanum lycopersicum",penyakit:"Layu Fusarium",patogen:"Fusarium oxysporum f. sp. lycopersici",gejala:"Daun menguning dari bawah, tanaman layu, batang kecoklatan."},
-    bawang:{nama:"Bawang Merah",ilmiah:"Allium ascalonicum",penyakit:"Busuk Daun Alternaria",patogen:"Alternaria porri",gejala:"Daun terdapat bercak ungu kecoklatan, ujung daun mengering."},
-    kentang:{nama:"Kentang",ilmiah:"Solanum tuberosum",penyakit:"Busuk Daun (Late Blight)",patogen:"Phytophthora infestans",gejala:"Daun bercak basah gelap, batang menghitam, umbi membusuk."},
-    semangka:{nama:"Semangka",ilmiah:"Citrullus lanatus",penyakit:"Embun Bulu",patogen:"Pseudoperonospora cubensis",gejala:"Daun kuning bercorak mosaik, bawah daun berjamur abu-abu."},
-    melon:{nama:"Melon",ilmiah:"Cucumis melo",penyakit:"Layu Bakteri",patogen:"Erwinia tracheiphila",gejala:"Tanaman layu mendadak, keluar lendir putih jika batang dipotong."},
-    kol:{nama:"Kol",ilmiah:"Brassica oleracea",penyakit:"Busuk Hitam",patogen:"Xanthomonas campestris pv. campestris",gejala:"Daun menguning bentuk V, urat daun menghitam."},
-    timun:{nama:"Mentimun",ilmiah:"Cucumis sativus",penyakit:"Embun Tepung",patogen:"Erysiphe cichoracearum / Podosphaera xanthii",gejala:"Daun tertutup bubuk putih, menguning dan rontok."},
-    stroberi:{nama:"Stroberi",ilmiah:"Fragaria × ananassa",penyakit:"Busuk Akar",patogen:"Phytophthora fragariae",gejala:"Akar coklat gelap & busuk, daun layu dari bawah."},
-    terung:{nama:"Terung",ilmiah:"Solanum melongena",penyakit:"Bercak Daun Cercospora",patogen:"Cercospora melongenae",gejala:"Daun muncul bercak abu-abu bulat dengan tepi coklat."}
-};
-
-function bukaPage(pg){
-    document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
-    document.getElementById(pg).classList.add('active');
-    window.scrollTo({top:0,behavior:'smooth'});
-}
-
-function renderData(){
-    const sel=document.getElementById('tanaman');
-    sel.innerHTML='<option value="">-- Pilih Tanaman --</option>';
-    Object.keys(data).forEach(k=>{
-        const o=document.createElement('option');
-        o.value=k; o.textContent=data[k].nama;
-        sel.appendChild(o);
-    });
-    let html='<table><thead><tr><th>No</th><th>Tanaman</th><th>Nama Ilmiah</th><th>Penyakit</th><th>Patogen</th><th>Gejala</th></tr></thead><tbody>';
-    Object.keys(data).forEach((k,i)=>{
-        const d=data[k];
-        html+=`<tr><td>${i+1}</td><td>${d.nama}</td><td><i>${d.ilmiah}</i></td><td>${d.penyakit}</td><td><i>${d.patogen}</i></td><td>${d.gejala}</td></tr>`;
-    });
-    html+='</tbody></table>';
-    document.getElementById('tableWrap').innerHTML=html;
-}
-
 function renderKesimpulan(){
-    let html='<table><thead><tr><th>No</th><th>Tanaman</th><th>Penyakit</th><th>Gejala</th></tr></thead><tbody>';
-    Object.keys(data).forEach((k,i)=>{
-        const d=data[k];
-        html+=`<tr><td>${i+1}</td><td>${d.nama}</td><td>${d.penyakit}</td><td>${d.gejala}</td></tr>`;
-    });
-    html+='</tbody></table>';
-    document.getElementById('kesimpulanWrap').innerHTML=html;
-}
-
-function diagnosa(){
-    const key=document.getElementById('tanaman').value;
-    const out=document.getElementById('output');
-    if(!key){ out.style.display='block'; out.innerHTML='⚠️ Silakan pilih tanaman terlebih dahulu.'; return; }
-    const d=data[key];
-    out.style.display='block';
-    out.innerHTML=`<h3 style='margin-top:0'>${d.nama}</h3><b>Nama Ilmiah:</b> <i>${d.ilmiah}</i><br><b>Penyakit:</b> ${d.penyakit}<br><b>Patogen:</b> <i>${d.patogen}</i><br><b>Gejala:</b> ${d.gejala}`;
-    out.scrollIntoView({behavior:'smooth',block:'center'});
-}
-
-document.addEventListener('DOMContentLoaded',()=>{
-    renderData();
-    renderKesimpulan();
-    document.querySelectorAll('.nav button').forEach(btn=>{
-        btn.onclick=()=>bukaPage(btn.getAttribute('data-target'));
-    });
-    document.getElementById('btnDiagnosa').onclick=diagnosa;
-    document.getElementById('btnMulai').onclick=()=>{
-        const w=document.getElementById('welcomeScreen');
-        w.style.animation='fadeOut 0.6s forwards';
-        setTimeout(()=>{w.style.display='none';bukaPage('pageAnggota');},620);
+    const data = {
+        cabai:{nama:"Cabai",ilmiah:"Capsicum annuum",penyakit:"Antraknosa",patogen:"Colletotrichum capsici / C. gloeosporioides",gejala:"Buah muncul bercak hitam cekung, membusuk, dan rontok."},
+        tomat:{nama:"Tomat",ilmiah:"Solanum lycopersicum",penyakit:"Layu Fusarium",patogen:"Fusarium oxysporum f. sp. lycopersici",gejala:"Daun menguning dari bawah, tanaman layu, batang kecoklatan."},
+        bawang:{nama:"Bawang Merah",ilmiah:"Allium ascalonicum",penyakit:"Busuk Daun Alternaria",patogen:"Alternaria porri",gejala:"Daun terdapat bercak ungu kecoklatan, ujung daun mengering."},
+        kentang:{nama:"Kentang",ilmiah:"Solanum tuberosum",penyakit:"Busuk Daun (Late Blight)",patogen:"Phytophthora infestans",gejala:"Daun bercak basah gelap, batang menghitam, umbi membusuk."},
+        semangka:{nama:"Semangka",ilmiah:"Citrullus lanatus",penyakit:"Embun Bulu",patogen:"Pseudoperonospora cubensis",gejala:"Daun kuning bercorak mosaik, bawah daun berjamur abu-abu."},
+        melon:{nama:"Melon",ilmiah:"Cucumis melo",penyakit:"Layu Bakteri",patogen:"Erwinia tracheiphila",gejala:"Tanaman layu mendadak, keluar lendir putih jika batang dipotong."},
+        kol:{nama:"Kol",ilmiah:"Brassica oleracea",penyakit:"Busuk Hitam",patogen:"Xanthomonas campestris pv. campestris",gejala:"Daun menguning bentuk V, urat daun menghitam."},
+        timun:{nama:"Mentimun",ilmiah:"Cucumis sativus",penyakit:"Embun Tepung",patogen:"Erysiphe cichoracearum / Podosphaera xanthii",gejala:"Daun tertutup bubuk putih, menguning dan rontok."},
+        stroberi:{nama:"Stroberi",ilmiah:"Fragaria × ananassa",penyakit:"Busuk Akar",patogen:"Phytophthora fragariae",gejala:"Akar coklat gelap & busuk, daun layu dari bawah."},
+        terung:{nama:"Terung",ilmiah:"Solanum melongena",penyakit:"Bercak Daun Cercospora",patogen:"Cercospora melongenae",gejala:"Daun muncul bercak abu-abu bulat dengan tepi coklat."}
     };
-    document.getElementById('btnTampilkanMenu').onclick=()=>bukaPage('page1');
-});
-</script>
-</body>
-</html>
+
+    const deskripsiTanaman = {
+        "Cabai":"Tanaman tropis yang banyak dibudidayakan untuk cabai pedasnya, asli Amerika Tengah dan Selatan, kini tersebar luas di Asia.",
+        "Tomat":"Tanaman buah yang kaya vitamin C, berasal dari Amerika Selatan, digunakan sebagai sayuran dan bumbu masak.",
+        "Bawang Merah":"Bawang merah banyak digunakan sebagai bumbu dapur, berasal dari Asia Tengah dan Barat.",
+        "Kentang":"Umbi yang menjadi sumber karbohidrat utama, berasal dari Andes di Amerika Selatan.",
+        "Semangka":"Buah yang segar dan manis, berasal dari Afrika Barat, kaya air dan vitamin.",
+        "Melon":"Buah manis dan aromatik, berasal dari Asia Barat dan Afrika Utara, banyak dikonsumsi segar.",
+        "Kol":"Sayuran daun hijau yang kaya vitamin, berasal dari Eropa, digunakan sebagai sayuran dan acar.",
+        "Mentimun":"Sayuran merambat, berasal dari Asia Selatan, digunakan segar atau dalam acar.",
+        "Stroberi":"Buah merah manis, berasal dari Eropa dan Amerika Utara, dikonsumsi segar atau olahan.",
+        "Terung":"Sayuran berbuah ungu, berasal dari India, digunakan sebagai bahan masakan berbagai negara."
+    };
+
+    const asalPenyakit = {
+        "Antraknosa":"Disebabkan oleh jamur Colletotrichum, banyak terjadi pada kondisi lembab tropis.",
+        "Layu Fusarium":"Disebabkan oleh Fusarium oxysporum f. sp. lycopersici, jamur tanah yang menyerang akar dan batang.",
+        "Busuk Daun Alternaria":"Disebabkan oleh jamur Alternaria porri, menyerang daun dan menyebabkan bercak ungu kecoklatan.",
+        "Busuk Daun (Late Blight)":"Disebabkan oleh Phytophthora infestans, jamur patogenik yang menyerang daun dan umbi kentang.",
+        "Embun Bulu":"Disebabkan oleh Pseudoperonospora cubensis, jamur yang menyebar melalui air dan kelembaban tinggi.",
+        "Layu Bakteri":"Disebabkan oleh bakteri Erwinia tracheiphila, menyebabkan layu mendadak pada tanaman merambat.",
+        "Busuk Hitam":"Disebabkan oleh Xanthomonas campestris pv. campestris, menyerang daun dan batang tanaman kol.",
+        "Embun Tepung":"Disebabkan oleh Erysiphe cichoracearum / Podosphaera xanthii, jamur yang menutupi daun dengan bubuk putih.",
+        "Busuk Akar":"Disebabkan oleh Phytophthora fragariae, menyerang akar stroberi dan menyebabkan layu daun.",
+        "Bercak Daun Cercospora":"Disebabkan oleh Cercospora melongenae, jamur yang menimbulkan bercak abu-abu pada daun terung."
+    };
+
+    let html = '';
+    Object.keys(data).forEach((k,i)=>{
+        const d = data[k];
+        html += `
+        <div style="margin-bottom:20px; padding:15px; background:#e8f5e9; border-left:6px solid #2e7d32; border-radius:10px;">
+            <h3 style="margin-top:0; color:#1b5e20;">${i+1}. ${d.nama} (<i>${d.ilmiah}</i>)</h3>
+            <p><b>Sejarah Singkat & Deskripsi Tanaman:</b> ${deskripsiTanaman[d.nama]}</p>
+            <p><b>Penyakit:</b> ${d.penyakit}</p>
+            <p><b>Asal-usul Penyakit/Patogen:</b> ${asalPenyakit[d.penyakit]}</p>
+            <p><b>Gejala Utama:</b> ${d.gejala}</p>
+        </div>
+        `;
+    });
+    document.getElementById('kesimpulanWrap').innerHTML = html;
+}
