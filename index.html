@@ -5,90 +5,45 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>SPK Diagnosa Tanaman</title>
 <style>
-body {
-    font-family:'Poppins',sans-serif;
-    margin:0; padding:0; color:#0a3d62;
-    background:linear-gradient(135deg,#e6f9e6,#f3fff3);
-}
-.page { display:none; padding:20px; }
-.active { display:block; }
-
-/* Navigasi */
-.nav {
-    width:100%; background:rgba(255,255,255,0.85); padding:12px 16px; display:flex;
-    justify-content:center; gap:12px; position:sticky; top:0; z-index:5; border-bottom:3px solid #2e7d32; backdrop-filter: blur(6px);
-}
-.nav button {
-    padding:10px 20px; border:none; border-radius:30px; background:#2e7d32; color:white; font-weight:600; cursor:pointer; transition:0.25s;
-}
-.nav button:hover { background:#1b5e20; transform:translateY(-3px); }
-
-/* Container */
-.container {
-    max-width:900px; margin:28px auto; padding:24px; border-radius:18px; box-shadow:0 10px 25px rgba(0,0,0,0.15);
-    animation:fadeSlide 0.7s ease-out;
-    background:url('https://images.unsplash.com/photo-1612865547332-1c63bbf1b9fa?auto=format&fit=crop&w=900&q=80') center/cover no-repeat;
-    color:white;
-}
-@keyframes fadeSlide { from{opacity:0; transform:translateY(25px);} to{opacity:1; transform:translateY(0);} }
-
-select, button.spkBtn {
-    width:100%; padding:14px; margin-top:14px; border-radius:12px; border:1px solid #66bb6a; font-size:16px; transition:0.18s;
-}
-button.spkBtn {
-    background:#2e7d32; color:white; font-weight:600; cursor:pointer; border:none;
-}
-button.spkBtn:hover { transform:scale(1.03); background:#1b5e20; }
-
-.hasil {
-    background:rgba(232,245,233,0.9); padding:18px; margin-top:18px;
-    border-left:6px solid #2e7d32; border-radius:10px; color:#0a3d62;
-}
-
-table {
-    width:100%; border-collapse:collapse; margin-top:18px;
-    background:rgba(255,255,255,0.9); color:#0a3d62;
-}
-th, td { border:1px solid #c8e6c9; padding:12px; text-align:left; }
-th { background:#2e7d32; color:white; }
-tr:nth-child(even){ background:rgba(241,248,241,0.8); }
-
-/* Welcome screen */
-#welcomeScreen {
-    position:fixed; top:0; left:0; width:100%; height:100vh;
-    background:linear-gradient(135deg,#388e3c,#2e7d32,#66bb6a);
-    display:flex; flex-direction:column; justify-content:center; align-items:center;
-    text-align:center; color:white; padding:20px; animation:fadeIn 0.8s ease-out;
-}
-@keyframes fadeIn { from{opacity:0;} to{opacity:1;} }
-@keyframes fadeOut { from{opacity:1;} to{opacity:0;} }
-
-.startBtn {
-    padding:14px 30px; font-size:18px; border:none; border-radius:14px;
-    background:white; color:#2e7d32; font-weight:700; cursor:pointer;
-}
-.startBtn:hover { transform:scale(1.07); }
-
-@media(max-width:700px){
-    .container{margin:18px; padding:18px;} .nav{gap:6px;}
-}
+    body { font-family: 'Poppins', sans-serif; background: linear-gradient(135deg, #e6f9e6, #f3fff3); margin: 0; padding: 0; color: #0a3d62; }
+    .page { display:none; padding:20px; }
+    .active { display:block; }
+    .nav { width:100%; background:white; padding:12px 16px; display:flex; justify-content:center; gap:12px; position:sticky; top:0; z-index:5; border-bottom:3px solid #2e7d32; backdrop-filter: blur(6px); flex-wrap:wrap; }
+    .nav button { padding:10px 20px; border:none; border-radius:30px; background:#2e7d32; color:white; font-weight:600; font-size:15px; cursor:pointer; transition:0.25s; box-shadow:0 4px 14px rgba(0,0,0,0.13); }
+    .nav button:hover { background:#1b5e20; transform:translateY(-3px); }
+    .container { max-width:900px; margin:28px auto; background:white; padding:24px; border-radius:18px; box-shadow:0 10px 25px rgba(0,0,0,0.15); animation:fadeSlide 0.7s ease-out; }
+    @keyframes fadeSlide { from{opacity:0; transform:translateY(25px);} to{opacity:1; transform:translateY(0);} }
+    select, button.spkBtn { width:100%; padding:14px; margin-top:14px; border-radius:12px; border:1px solid #66bb6a; font-size:16px; transition:0.18s; }
+    button.spkBtn { background:#2e7d32; color:white; font-weight:600; cursor:pointer; box-shadow:0 5px 12px rgba(0,0,0,0.15); border:none; }
+    button.spkBtn:hover { transform:scale(1.03); background:#1b5e20; }
+    .hasil { background:#e8f5e9; padding:18px; margin-top:18px; border-left:6px solid #2e7d32; border-radius:10px; font-size:15px; }
+    table { width:100%; border-collapse:collapse; margin-top:18px; }
+    th, td { border:1px solid #c8e6c9; padding:12px; text-align:left; font-size:15px; }
+    th { background:#2e7d32; color:white; }
+    tr:nth-child(even) { background:#f1f8f1; }
+    #welcomeScreen { position:fixed; top:0; left:0; width:100%; height:100vh; background:linear-gradient(135deg,#388e3c,#2e7d32,#66bb6a); display:flex; flex-direction:column; justify-content:center; align-items:center; text-align:center; color:white; padding:20px; animation:fadeIn 0.8s ease-out; }
+    @keyframes fadeIn { from{opacity:0;} to{opacity:1;} }
+    @keyframes fadeOut { from{opacity:1;} to{opacity:0;} }
+    .startBtn { padding:14px 30px; font-size:18px; border:none; border-radius:14px; background:white; color:#2e7d32; font-weight:700; cursor:pointer; box-shadow:0 5px 15px rgba(0,0,0,0.2); transition:0.25s; }
+    .startBtn:hover { transform:scale(1.07); }
+    @media (max-width:700px) { .container { margin:18px; padding:18px; } .nav { gap:6px; } }
 </style>
 </head>
 <body>
 
 <!-- Welcome Screen -->
 <div id="welcomeScreen">
-    <h1>🌱 SPK Tanaman</h1>
-    <p>Sistem Pendukung Keputusan Diagnosa Penyakit Tanaman</p>
+    <h1 style="font-size:48px; font-weight:800; margin:0 0 16px;">🌱 SPK Tanaman</h1>
+    <p style="font-size:18px; opacity:0.95; margin:0 0 24px; max-width:520px;">Sistem Pendukung Keputusan Diagnosa Penyakit Tanaman</p>
     <button id="btnMulai" class="startBtn">Mulai</button>
 </div>
 
-<!-- Page Anggota -->
+<!-- Halaman Anggota -->
 <div class="page" id="pageAnggota">
     <div class="container">
-        <h2>Informasi Kelompok 4</h2>
-        <p>Daftar Anggota:</p>
-        <ul>
+        <h2 style="text-align:center; color:#1b5e20;">Informasi Kelompok 4</h2>
+        <p style="font-size:16px; font-weight:600;">Daftar Anggota:</p>
+        <ul style="font-size:15px; line-height:1.8;">
             <li>Tiara Farliani Mamonto – 250311080023</li>
             <li>Juandri G. Sepang – 250311080018</li>
             <li>Lotta Virni Br Tumanggor – 250311080019</li>
@@ -96,42 +51,61 @@ tr:nth-child(even){ background:rgba(241,248,241,0.8); }
             <li>Salli Mustika Sihaloho – 250311080021</li>
         </ul>
         <div style="text-align:center; margin-top:20px;">
-            <button id="btnTampilkanMenu" class="spkBtn">Tampilkan Menu</button>
+            <button id="btnTampilkanMenu" class="spkBtn" style="max-width:240px;">Tampilkan Menu</button>
         </div>
     </div>
 </div>
 
-<!-- Page Diagnosa -->
+<!-- Halaman Diagnosa -->
 <div class="page" id="page1">
     <div class="nav">
         <button data-target="pageAnggota">Anggota</button>
         <button data-target="page1">Diagnosa</button>
         <button data-target="page2">Data Keseluruhan</button>
+        <button data-target="page3">Kesimpulan</button>
     </div>
     <div class="container">
-        <h2>Menu SPK Penyakit Tanaman</h2>
+        <h2 style="text-align:center; color:#1b5e20;">Menu SPK Penyakit Tanaman</h2>
         <label for="tanaman">Pilih Nama Tanaman:</label>
-        <select id="tanaman"></select>
+        <select id="tanaman"><option value="">-- Pilih Tanaman --</option></select>
         <button class="spkBtn" id="btnDiagnosa">Diagnosa</button>
         <div id="output" class="hasil" style="display:none;"></div>
     </div>
 </div>
 
-<!-- Page Data Keseluruhan -->
+<!-- Halaman Data Keseluruhan -->
 <div class="page" id="page2">
     <div class="nav">
         <button data-target="pageAnggota">Anggota</button>
         <button data-target="page1">Diagnosa</button>
         <button data-target="page2">Data Keseluruhan</button>
+        <button data-target="page3">Kesimpulan</button>
     </div>
     <div class="container">
-        <h2>Data Lengkap 10 Tanaman</h2>
+        <h2 style="text-align:center; color:#1b5e20;">Data Lengkap 10 Tanaman</h2>
         <div id="tableWrap"></div>
     </div>
 </div>
 
+<!-- Halaman Kesimpulan -->
+<div class="page" id="page3">
+    <div class="nav">
+        <button data-target="pageAnggota">Anggota</button>
+        <button data-target="page1">Diagnosa</button>
+        <button data-target="page2">Data Keseluruhan</button>
+        <button data-target="page3">Kesimpulan</button>
+    </div>
+    <div class="container">
+        <h2 style="text-align:center; color:#1b5e20;">Kesimpulan</h2>
+        <p style="font-size:16px; line-height:1.8;">
+            Berdasarkan data 10 tanaman yang dianalisis, berikut ringkasan penyakit dan gejala yang ditemukan:
+        </p>
+        <div id="kesimpulanWrap"></div>
+    </div>
+</div>
+
 <script>
-const data={
+const data = {
     cabai:{nama:"Cabai",ilmiah:"Capsicum annuum",penyakit:"Antraknosa",patogen:"Colletotrichum capsici / C. gloeosporioides",gejala:"Buah muncul bercak hitam cekung, membusuk, dan rontok."},
     tomat:{nama:"Tomat",ilmiah:"Solanum lycopersicum",penyakit:"Layu Fusarium",patogen:"Fusarium oxysporum f. sp. lycopersici",gejala:"Daun menguning dari bawah, tanaman layu, batang kecoklatan."},
     bawang:{nama:"Bawang Merah",ilmiah:"Allium ascalonicum",penyakit:"Busuk Daun Alternaria",patogen:"Alternaria porri",gejala:"Daun terdapat bercak ungu kecoklatan, ujung daun mengering."},
@@ -147,49 +121,59 @@ const data={
 function bukaPage(pg){
     document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
     document.getElementById(pg).classList.add('active');
-    window.scrollTo({top:0, behavior:'smooth'});
+    window.scrollTo({top:0,behavior:'smooth'});
 }
 
 function renderData(){
     const sel=document.getElementById('tanaman');
     sel.innerHTML='<option value="">-- Pilih Tanaman --</option>';
     Object.keys(data).forEach(k=>{
-        const opt=document.createElement('option'); opt.value=k; opt.textContent=data[k].nama;
-        sel.appendChild(opt);
+        const o=document.createElement('option');
+        o.value=k; o.textContent=data[k].nama;
+        sel.appendChild(o);
     });
-
-    const tableWrap=document.getElementById('tableWrap');
     let html='<table><thead><tr><th>No</th><th>Tanaman</th><th>Nama Ilmiah</th><th>Penyakit</th><th>Patogen</th><th>Gejala</th></tr></thead><tbody>';
     Object.keys(data).forEach((k,i)=>{
         const d=data[k];
         html+=`<tr><td>${i+1}</td><td>${d.nama}</td><td><i>${d.ilmiah}</i></td><td>${d.penyakit}</td><td><i>${d.patogen}</i></td><td>${d.gejala}</td></tr>`;
     });
     html+='</tbody></table>';
-    tableWrap.innerHTML=html;
+    document.getElementById('tableWrap').innerHTML=html;
+}
+
+function renderKesimpulan(){
+    let html='<table><thead><tr><th>No</th><th>Tanaman</th><th>Penyakit</th><th>Gejala</th></tr></thead><tbody>';
+    Object.keys(data).forEach((k,i)=>{
+        const d=data[k];
+        html+=`<tr><td>${i+1}</td><td>${d.nama}</td><td>${d.penyakit}</td><td>${d.gejala}</td></tr>`;
+    });
+    html+='</tbody></table>';
+    document.getElementById('kesimpulanWrap').innerHTML=html;
 }
 
 function diagnosa(){
-    const sel=document.getElementById('tanaman');
-    const key=sel.value;
+    const key=document.getElementById('tanaman').value;
     const out=document.getElementById('output');
     if(!key){ out.style.display='block'; out.innerHTML='⚠️ Silakan pilih tanaman terlebih dahulu.'; return; }
     const d=data[key];
     out.style.display='block';
-    out.innerHTML=`<h3>${d.nama}</h3><b>Nama Ilmiah:</b> <i>${d.ilmiah}</i><br><b>Penyakit:</b> ${d.penyakit}<br><b>Patogen:</b> <i>${d.patogen}</i><br><b>Gejala:</b> ${d.gejala}`;
-    out.scrollIntoView({behavior:'smooth', block:'center'});
+    out.innerHTML=`<h3 style='margin-top:0'>${d.nama}</h3><b>Nama Ilmiah:</b> <i>${d.ilmiah}</i><br><b>Penyakit:</b> ${d.penyakit}<br><b>Patogen:</b> <i>${d.patogen}</i><br><b>Gejala:</b> ${d.gejala}`;
+    out.scrollIntoView({behavior:'smooth',block:'center'});
 }
 
-document.addEventListener('DOMContentLoaded', ()=>{
+document.addEventListener('DOMContentLoaded',()=>{
     renderData();
-    document.querySelectorAll('.nav button').forEach(btn=>{ btn.onclick=()=>bukaPage(btn.getAttribute('data-target')); });
+    renderKesimpulan();
+    document.querySelectorAll('.nav button').forEach(btn=>{
+        btn.onclick=()=>bukaPage(btn.getAttribute('data-target'));
+    });
     document.getElementById('btnDiagnosa').onclick=diagnosa;
     document.getElementById('btnMulai').onclick=()=>{
         const w=document.getElementById('welcomeScreen');
         w.style.animation='fadeOut 0.6s forwards';
-        setTimeout(()=>{ w.style.display='none'; bukaPage('pageAnggota'); },620);
+        setTimeout(()=>{w.style.display='none';bukaPage('pageAnggota');},620);
     };
     document.getElementById('btnTampilkanMenu').onclick=()=>bukaPage('page1');
-    bukaPage('pageAnggota');
 });
 </script>
 </body>
